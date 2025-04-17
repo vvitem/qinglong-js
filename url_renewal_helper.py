@@ -1,5 +1,5 @@
 """
-脚本名称: url续期助手.py
+脚本名称: new Env('URL续期助手');
 定时任务：每隔5分钟执行一次
 cron: */5 * * * *
 主要用途: 定时检测多个URL的健康状态，并自动续期URL，支持分组轮询和重试机制。
@@ -16,21 +16,6 @@ cron: */5 * * * *
 环境变量:
 POLL_URLS - URL组配置，格式：组1URL1&组1URL2@组2URL1 (用@分隔组，&分隔同组URL)
 示例: export POLL_URLS="http://api1.example.com&http://api2.example.com@http://monitor.example.com"
-
-依赖库:
-- requests
-- certifi
-- python-dotenv (可选，用于环境变量文件加载)
-
-执行方式:
-python url续期助手.py
-
-日志存储:
-./logs/poll_urls_<timestamp>.log
-
-异常处理:
-- 网络异常自动重试3次
-- 所有重试失败后记录错误日志
 """
 import os
 import time
