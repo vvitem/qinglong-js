@@ -1,6 +1,10 @@
 # 青龙脚本基础配置
-scripts_dir: ./scripts
+scripts_dir: .
 log_dir: ./logs
 notification:
   type: webhook
   url: ""
+
+# 轮询URL配置
+urls:
+  - https://paste.c-net.org/PyjamasEleni
