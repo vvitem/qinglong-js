@@ -26,6 +26,7 @@ import time
 import certifi
 import requests
 import logging
+import notify
 
 class UrlPoller:
     def __init__(self, urls):
@@ -37,6 +38,7 @@ class UrlPoller:
 
     def poll_single(self, url):
         success = False
+        last_exception = None
         for attempt in range(3):
             try:
                 response = requests.get(url, headers=self.headers, timeout=10, verify=certifi.where())
@@ -49,11 +51,19 @@ class UrlPoller:
                 else:
                     logging.error(log_msg)
             except Exception as e:
+                last_exception = e
                 log_msg = f"[{time.ctime()}] {url} 异常: {str(e)} 尝试:{attempt+1}"
                 logging.error(log_msg)
             time.sleep(5)
         if not success:
-            logging.error(f"[{time.ctime()}] {url} 所有重试均失败")
+            fail_time = time.ctime()
+            retry_count = attempt + 1
+            err_info = str(last_exception) if last_exception else '无异常信息'
+            notify.wxpusher_bot(
+                title="URL健康监测告警",
+                content=f"URL: {url}\n失败时间: {fail_time}\n重试次数: {retry_count}\n异常信息: {err_info}"
+            )
+            logging.error(f"[{fail_time}] {url} 所有重试均失败")
 
     def poll_all(self):
         for url in self.urls:
