@@ -1,0 +1,13 @@
+# 忽略日志文件
+logs/
+
+# 忽略依赖目录
+node_modules/
+__pycache__/
+
+# 忽略环境文件
+.env
+
+# 忽略IDE文件
+.vscode/
+.idea/

@@ -1,0 +1,6 @@
+# 青龙脚本基础配置
+scripts_dir: ./scripts
+log_dir: ./logs
+notification:
+  type: webhook
+  url: ""
